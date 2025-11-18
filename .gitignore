@@ -1,0 +1,13 @@
+# Ядро Битрикс и кеш
+/bitrix/
+/bitrix
+/upload/
+/upload
+
+# Служебные файлы и логи
+/*.log
+/*.sql
+/.idea/
+/Thumbs.db
+.DS_Store
+
