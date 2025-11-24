@@ -4,6 +4,6 @@ if(!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true)
 
 $arTemplate = Array(
 	'NAME' => 'main',
-	'DESCRIPTION' => 'www'
+	'DESCRIPTION' => 'Основной шаблон для сайта'
 );
 ?>

@@ -15,11 +15,12 @@ use Bitrix\Main\Page\Asset;
 
 	<title><? $APPLICATION->ShowTitle(); ?></title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="shortcut icon" href="<?= SITE_TEMPLATE_PATH ?>/assets/images/favicon.604825ed.ico" type="image/x-icon">
+	<link rel="shortcut icon" href="<?= SITE_TEMPLATE_PATH?>'/assets/images/favicon.604825ed.ico" type="image/x-icon">
+
 
 	<?php
-	Asset::getInstance()->addString('<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&amp;subset=cyrillic,cyrillic-ext" rel="stylesheet">');
-	Asset::getInstance()->addCss(SITE_TEMPLATE_PATH . '/assets/css/main.css');
+
+	Asset::getInstance()->addCss(SITE_TEMPLATE_PATH . '/assets/css/common.css');
 
 
 	$APPLICATION->ShowHead(); ?>
@@ -31,3 +32,4 @@ use Bitrix\Main\Page\Asset;
 	<div id="panel">
 		<? $APPLICATION->ShowPanel(); ?>
 	</div>
+	

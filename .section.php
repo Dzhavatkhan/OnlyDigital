@@ -1,7 +1,7 @@
 <?
 $sSectionName = 'Главная';
 $arDirProperties = array(
-	'title' => 'Only',
+	'title' => 'Only Digital',
 	'description' => 'Description',
 	'keywords' => 'Keywords',
 	'robots' => 'index, follow'

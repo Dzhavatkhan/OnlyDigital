@@ -1,13 +1,102 @@
-# Ядро Битрикс и кеш
+# Битрикс
+/bitrix/backup/
 /bitrix/
-/bitrix
-/upload/
-/upload
+/bitrix/backups/
+/bitrix/cache/
+/bitrix/cache_cache/
+/bitrix/cache_managed/
+/bitrix/managed_cache/
+/bitrix/stack_cache/
+/bitrix/html_pages/
+/bitrix/tmp/
+/bitrix/updates/
+/bitrix/upload/
+/bitrix/components/bitrix/
+/bitrix/wizards/bitrix/
+/bitrix/blocks/bitrix/
+/bitrix/activities/bitrix/
+/bitrix/gadgets/bitrix/
+/bitrix/templates/bitrix/
+/bitrix/images/fileman/upload/
+/bitrix/images/medialib/
 
-# Служебные файлы и логи
+# Логи
+/bitrix/php_interface/*.log
 /*.log
-/*.sql
-/.idea/
-/Thumbs.db
+/logs/
+
+# Конфигурационные файлы с чувствительными данными
+/bitrix/php_interface/dbconn.php
+/bitrix/php_interface/after_connect_d7.php
+/bitrix/php_interface/after_connect.php
+/bitrix/.settings.php
+/bitrix/.settings_extra.php
+/.settings.php
+/.settings_extra.php
+
+# Персональные данные
+/bitrix/personal/
+
+# Резервные копии
+*.bak
+*.backup
+
+
+
+# macOS
 .DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Пользовательские файлы
+/upload/resize_cache/
+/upload/tmp/
+/upload/support/
+/upload/learning/
+/upload/composite/
+
+# Кеш композитного сайта
+/bitrix/cache/composite/
+
+# Миграции и деплой
+/migrations/
+/deploy/
+
+# Документация
+/docs/_build/
+
+# Тестовые данные
+/bitrix/tests/
+
+# Временные файлы Битрикс
+/bitrix/updates_www/
+/bitrix/updates_www_enc/
+/bitrix/updates_www_tmp/
+
+# Файлы сессий (если хранятся в файловой системе)
+/bitrix/sessions/
+
+# Файлы управления сайтом
+/bitrix/management/
+
+# Кеш Highload блоков
+/bitrix/cache_hl/
+
+# Кеш агентов
+/bitrix/cache_agents/
+
+# Файлы экспорта/импорта
+/bitrix/export/
+/bitrix/import/
+
+# Файлы веб-сервера
+/.htaccess
+/bitrix/urlrewrite.php
+/web.config
+
 
