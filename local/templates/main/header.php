@@ -21,6 +21,8 @@ use Bitrix\Main\Page\Asset;
 	<?php
 
 	Asset::getInstance()->addCss(SITE_TEMPLATE_PATH . '/assets/css/common.css');
+	Asset::getInstance()->addCss(SITE_TEMPLATE_PATH . '/assets/css/style.css');
+	
 
 
 	$APPLICATION->ShowHead(); ?>
