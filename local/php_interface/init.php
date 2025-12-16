@@ -4,8 +4,75 @@ use Agents\Iblock;
 
 require_once($_SERVER['DOCUMENT_ROOT'] . '/local/modules/DevSite/lib/Agents/Iblock.php');
 
+AddEventHandler("main", "OnPageStart", function () {
+    if (defined('ADMIN_SECTION') && ADMIN_SECTION === true) {
+        return;
+    }
+
+    registerCleanLogAgent();
+});
+
 AddEventHandler("iblock", "OnAfterIBlockElementAdd", "LogElementChange");
 AddEventHandler("iblock", "OnAfterIBlockElementUpdate", "LogElementChange");
+
+function registerCleanLogAgent()
+{
+    // Подключаем модуль main, если не подключен
+    if (!\Bitrix\Main\Loader::includeModule('main')) {
+        return;
+    }
+
+    // Проверим, есть ли уже такой агент
+    $agent = \CAgent::GetList(
+        [],
+        ['NAME' => 'Agents\\Iblock::CleanLog();'] 
+    )->Fetch();
+
+    if (!$agent) {
+        $nextExec = ConvertTimeStamp(time() + 3600, 'FULL'); 
+
+        $agentId = \CAgent::AddAgent(
+            'Agents\\Iblock::CleanLog();',  
+            '',                             
+            'N',                            
+            3600,                             
+            '',                             
+            'Y',                            
+            $nextExec,                      
+            30                              
+        );
+
+        if ($agentId) {
+            \CEventLog::Add([
+                'SEVERITY' => 'INFO',
+                'AUDIT_TYPE_ID' => 'AGENT_REGISTERED',
+                'MODULE_ID' => 'main',
+                'DESCRIPTION' => "Агент CleanLog успешно зарегистрирован, ID: $agentId, следующий запуск: $nextExec"
+            ]);
+        } else {
+            $error = $GLOBALS['APPLICATION']->GetException();
+            \CEventLog::Add([
+                'SEVERITY' => 'ERROR',
+                'AUDIT_TYPE_ID' => 'AGENT_ERROR',
+                'MODULE_ID' => 'main',
+                'DESCRIPTION' => "Ошибка регистрации агента: " . ($error ? $error->GetString() : 'Неизвестная ошибка')
+            ]);
+        }
+    } else {
+        
+        if (empty($agent['NEXT_EXEC'])) {
+            $nextExec = ConvertTimeStamp(time() + $agent['AGENT_INTERVAL'], 'FULL');
+            \CAgent::Update($agent['ID'], ['NEXT_EXEC' => $nextExec]);
+
+            \CEventLog::Add([
+                'SEVERITY' => 'INFO',
+                'AUDIT_TYPE_ID' => 'AGENT_FIXED',
+                'MODULE_ID' => 'main',
+                'DESCRIPTION' => "Исправлен пустой NEXT_EXEC для агента CleanLog"
+            ]);
+        }
+    }
+}
 
 $GLOBALS['CACHE_IBLOCK_DATA'] = [];
 
@@ -89,8 +156,7 @@ function LogElementChange($arFields)
     static $logIblockId = null;
 
     if ($logIblockId === null) {
-        $log = new Iblock();
-        $iblockData = $log->GetBlock();
+        $iblockData = Iblock::GetBlock();
         $logIblockId = $iblockData ? $iblockData['ID'] : false;
     }
 
@@ -142,8 +208,8 @@ function LogElementChange($arFields)
             'ORIGINAL_IBLOCK_ID' => $iblockId,
             'ACTION_TYPE' => $arFields['TIMESTAMP_X'] ? 'UPDATE' : 'ADD',
         ],
-        'NAME' => $elementId, // имя — ID
-    ], false, false); // отключаем отправку почты и индексацию
+        'NAME' => $elementId, 
+    ], false, false);
 
     if (!$result) {
         \CEventLog::Add([

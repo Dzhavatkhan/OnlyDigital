@@ -4,20 +4,17 @@ namespace Sprint\Migration;
 
 use Bitrix\Main\Loader;
 use CIBlock;
-use CIBlockType;
 use CIBlockProperty;
 use CIBlockPropertyEnum;
-use Sprint\Migration\Version as Version;
 
-class Version20251208003817 extends Version
+class Version20251216161848 extends Version
 {
-    public $iblockId;
-
     protected $author = "admin";
 
-    protected $description = "vac";
+    protected $description = "";
 
     protected $moduleVersion = "5.6.0";
+   public $iblockId;
 
     public function up()
     {
